@@ -1,0 +1,44 @@
+seed: 588622
+
+100 Elementos:
+
+Using sequence: Potencia de 2
+Execution time for shell_sort: 0.997066 ms
+Numero de movimentacoes:  461
+
+Using sequence: 3n+1
+Execution time for shell_sort: 1.002073 ms
+Numero de movimentacoes:  398
+
+Using sequence: Ciura
+Execution time for shell_sort: 0.995874 ms
+Numero de movimentacoes:  305
+
+
+1000 Elementos:
+
+Using sequence: Potencia de 2
+Execution time for shell_sort: 5.992174 ms
+Numero de movimentacoes:  14521
+
+Using sequence: 3n+1
+Execution time for shell_sort: 57.998419 ms
+Numero de movimentacoes:  9575
+
+Using sequence: Ciura
+Execution time for shell_sort: 7.991076 ms
+Numero de movimentacoes:  6634
+
+100000 Elementos
+
+Using sequence: Potencia de 2
+Execution time for shell_sort: 5145.791292 ms
+Numero de movimentacoes:  15878149
+
+Using sequence: 3n+1
+Execution time for shell_sort: 1285.703421 ms
+Numero de movimentacoes:  2765025
+
+Using sequence: Ciura
+Execution time for shell_sort: 1036.801577 ms
+Numero de movimentacoes:  1189596
