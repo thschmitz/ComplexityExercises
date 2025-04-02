@@ -1,128 +1,88 @@
 import random
 import time
+import csv
+import os
 
-# Define simulados (constantes)
+# Define constantes
 FIRST_VALUE = "FIRST_VALUE"
 RANDOM_VALUE = "RANDOM_VALUE"
 LOMUTO = "LOMUTO"
 HOARE = "HOARE"
 
-def quicksort_lomuto_first_key(lista, i, f):
-    if f > i:
-        p = partition_lomuto_first_key(lista, i, f)
-        quicksort_lomuto_first_key(lista, i, p - 1)
-        quicksort_lomuto_first_key(lista, p + 1, f)
-
-def quicksort_lomuto_random_key(lista, i, f):
-    if f > i:
-        p = partition_lomuto_random_key(lista, i, f)
-        quicksort_lomuto_random_key(lista, i, p - 1)
-        quicksort_lomuto_random_key(lista, p + 1, f)
-
-def quicksort_hoare_first_key(lista, i, f):
-    if f > i:
-        p = partition_hoare_first_key(lista, i, f)
-        quicksort_hoare_first_key(lista, i, p)
-        quicksort_hoare_first_key(lista, p + 1, f)
-
-def quicksort_hoare_random_key(lista, i, f):
-    if f > i:
-        p = partition_hoare_random_key(lista, i, f)
-        quicksort_hoare_random_key(lista, i, p)
-        quicksort_hoare_random_key(lista, p + 1, f)
-
-def partition_lomuto_first_key(lista, left, right):
-    chave = lista[left]
-    storeIndex = left + 1
-    for i in range(left + 1, right + 1):
-        if lista[i] < chave:
-            lista[i], lista[storeIndex] = lista[storeIndex], lista[i]
-            storeIndex += 1
-    lista[left], lista[storeIndex - 1] = lista[storeIndex - 1], lista[left]
-    return storeIndex - 1
-
-def partition_lomuto_random_key(lista, left, right):
-    index_random = random.randint(left, right)
-    lista[left], lista[index_random] = lista[index_random], lista[left]
-    chave = lista[left]
-    storeIndex = left + 1
-    for i in range(left + 1, right + 1):
-        if lista[i] < chave:
-            lista[i], lista[storeIndex] = lista[storeIndex], lista[i]
-            storeIndex += 1
-    lista[left], lista[storeIndex - 1] = lista[storeIndex - 1], lista[left]
-    return storeIndex - 1
-
-def partition_hoare_first_key(lista, left, right):
-    chave = lista[left]
-    i = left - 1
-    j = right + 1
-    while True:
-        while True:
-            i += 1
-            if lista[i] >= chave:
-                break
-        while True:
-            j -= 1
-            if lista[j] <= chave:
-                break
-        if i >= j:
-            return j
-        lista[i], lista[j] = lista[j], lista[i]
-
-def partition_hoare_random_key(lista, left, right):
-    index_random = random.randint(left, right)
-    lista[left], lista[index_random] = lista[index_random], lista[left]
-    chave = lista[left]
-    i = left - 1
-    j = right + 1
-    while True:
-        while True:
-            i += 1
-            if lista[i] >= chave:
-                break
-        while True:
-            j -= 1
-            if lista[j] <= chave:
-                break
-        if i >= j:
-            return j
-        lista[i], lista[j] = lista[j], lista[i]
-
-def quicksort(lista, pivot_type, partition_scheme):
-    array = lista.copy()
-    start_time = time.time()
+# Define função de partição dinâmica
+def partition(lista, left, right, pivot_type, partition_scheme):
+    if pivot_type == RANDOM_VALUE:
+        random_index = random.randint(left, right)
+        lista[left], lista[random_index] = lista[random_index], lista[left]
+    
+    pivot = lista[left]
 
     if partition_scheme == LOMUTO:
-        if pivot_type == FIRST_VALUE:
-            quicksort_lomuto_first_key(array, 0, len(array) - 1)
-            nome = "Lomuto + First Value"
-        elif pivot_type == RANDOM_VALUE:
-            quicksort_lomuto_random_key(array, 0, len(array) - 1)
-            nome = "Lomuto + Random Value"
+        storeIndex = left + 1
+        for i in range(left + 1, right + 1):
+            if lista[i] < pivot:
+                lista[i], lista[storeIndex] = lista[storeIndex], lista[i]
+                storeIndex += 1
+        lista[left], lista[storeIndex - 1] = lista[storeIndex - 1], lista[left]
+        return storeIndex - 1
+    
     elif partition_scheme == HOARE:
-        if pivot_type == FIRST_VALUE:
-            quicksort_hoare_first_key(array, 0, len(array) - 1)
-            nome = "Hoare + First Value"
-        elif pivot_type == RANDOM_VALUE:
-            quicksort_hoare_random_key(array, 0, len(array) - 1)
-            nome = "Hoare + Random Value"
+        i = left - 1
+        j = right + 1
+        while True:
+            while True:
+                i += 1
+                if lista[i] >= pivot:
+                    break
+            while True:
+                j -= 1
+                if lista[j] <= pivot:
+                    break
+            if i >= j:
+                return j
+            lista[i], lista[j] = lista[j], lista[i]
+
     else:
-        raise ValueError("Partition scheme inválido")
+        raise ValueError("Esquema de partição inválido")
 
-    end_time = time.time()
-    tempo = (end_time - start_time) * 1000
-    print(f"{nome}: {tempo:.2f} ms")
+# Função única de Quicksort
+def quicksort(lista, i, f, pivot_type, partition_scheme):
+    if f > i:
+        p = partition(lista, i, f, pivot_type, partition_scheme)
+        if partition_scheme == LOMUTO:
+            quicksort(lista, i, p - 1, pivot_type, partition_scheme)
+            quicksort(lista, p + 1, f, pivot_type, partition_scheme)
+        elif partition_scheme == HOARE:
+            quicksort(lista, i, p, pivot_type, partition_scheme)
+            quicksort(lista, p + 1, f, pivot_type, partition_scheme)
 
-def generate_random_array(n, seed=None):
-    if seed is not None:
-        random.seed(seed)
+def run_quicksort(nome_alg, lista, pivot_type, partition_scheme):
+    copia = lista.copy()
+    start = time.time()
+    quicksort(copia, 0, len(copia) - 1, pivot_type, partition_scheme)
+    end = time.time()
+    tempo = (end - start) * 1000
+    print(f"{nome_alg}: {tempo:.2f} ms")
+
+# Geração e salvamento de arrays
+def generate_random_array(n, seed=588622):
+    random.seed(seed)
     return [random.randint(0, 10000) for _ in range(n)]
 
-# Teste chamando com os "defines"
-lista = generate_random_array(100000)
+def salvar_em_txt(lista, nome):
+    with open(f"Quicksort/{nome}.txt", 'w', newline='') as f:
+        writer = csv.writer(f)
+        writer.writerow(lista)
 
-quicksort(lista, FIRST_VALUE, LOMUTO)
-quicksort(lista, RANDOM_VALUE, LOMUTO)
-quicksort(lista, FIRST_VALUE, HOARE)
-quicksort(lista, RANDOM_VALUE, HOARE)
+# Executa para vários tamanhos
+tamanhos = [1000, 10000, 100000, 1000000]
+
+for tam in tamanhos:
+    print(f"\n--- Tamanho: {tam} elementos ---")
+    lista = generate_random_array(tam)
+    salvar_em_txt(lista, str(tam))
+
+    run_quicksort("Lomuto + First Value", lista, FIRST_VALUE, LOMUTO)
+    run_quicksort("Lomuto + Random Value", lista, RANDOM_VALUE, LOMUTO)
+    run_quicksort("Hoare + First Value", lista, FIRST_VALUE, HOARE)
+    run_quicksort("Hoare + Random Value", lista, RANDOM_VALUE, HOARE)
