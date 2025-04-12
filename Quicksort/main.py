@@ -1,7 +1,7 @@
 import random
 import time
 import csv
-import os
+import tracemalloc  # ← novo
 
 # Define constantes
 FIRST_VALUE = "FIRST_VALUE"
@@ -61,8 +61,14 @@ def run_quicksort(nome_alg, lista, pivot_type, partition_scheme):
     start = time.time()
     quicksort(copia, 0, len(copia) - 1, pivot_type, partition_scheme)
     end = time.time()
+
+    current, peak = tracemalloc.get_traced_memory()  # ← mede memória
+
+    tracemalloc.stop()  # ← finaliza rastreamento
     tempo = (end - start) * 1000
     print(f"{nome_alg}: {tempo:.2f} ms")
+    print(f"Memória usada: {current / 1024:.2f} KB")
+    print(f"Pico de memória: {peak / 1024:.2f} KB")
 
 # Geração e salvamento de arrays
 def generate_random_array(n, seed=588622):
@@ -70,7 +76,7 @@ def generate_random_array(n, seed=588622):
     return [random.randint(0, 10000) for _ in range(n)]
 
 def salvar_em_txt(lista, nome):
-    with open(f"Quicksort/{nome}.txt", 'w', newline='') as f:
+    with open(f"{nome}.txt", 'w', newline='') as f:
         writer = csv.writer(f)
         writer.writerow(lista)
 
