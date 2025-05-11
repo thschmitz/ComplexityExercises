@@ -1,4 +1,4 @@
-212,191,204,236,243
+290,181,169,198,209
 158023,Lionel Andres Messi Cuccittini,2,4,4,2,2
 20801,Cristiano Ronaldo dos Santos Aveiro,4,4,2,2,2
 200389,Jan Oblak,6,2,2,2,2
@@ -6515,7 +6515,7 @@
 246657,Alvaro Valles Rosa,6,4,4,2,4
 247882,Ruben Cordano Justiniano,4,4,6,4,4
 251981,Matthieu Huard,6,2,4,2,4
-99999,NAO_ENCONTRADO,6,4,0,2,2
+99999,NAO_ENCONTRADO,7,5,1,3,3
 253073,Joseph Okumu,6,4,4,4,4
 253345,Jhon Jairo Sanchez Enriquez,4,4,4,4,4
 255340,Emiliano Martinez Toranza,6,4,4,4,2
@@ -6530,7 +6530,7 @@
 223151,Dimitri Joseph Oberlin Mfomo,6,2,2,4,2
 223570,Salomon Junior Sambia,6,4,2,2,6
 224838,Filip Dagerstal,4,2,2,2,2
-99999,NAO_ENCONTRADO,6,2,2,0,2
+99999,NAO_ENCONTRADO,7,3,3,1,3
 225203,Liam Kelly,6,2,2,4,2
 225270,Ignacio Alejandro Jeraldino Jul,2,2,2,2,2
 225915,Cristian Agustin Fontana,2,2,4,2,2
@@ -6682,7 +6682,7 @@
 204842,Yanick Brecher,6,4,2,4,2
 205759,Dejan Stojanovic,4,2,2,2,2
 208782,Mickey van der Hart,4,6,4,2,2
-99999,NAO_ENCONTRADO,4,4,4,2,2
+99999,NAO_ENCONTRADO,5,5,5,3,3
 210366,Niklas Lomb,4,2,2,2,2
 210644,Emiliano Marcondes Camargo Hansen,4,2,2,2,4
 211595,George Evans,6,2,2,4,2
@@ -6836,8 +6836,8 @@
 188202,Yannick Thoelen,6,4,4,4,2
 190669,Oscar Jansson,2,4,4,4,4
 192110,Carlos Eduardo Fierro Guerrero,4,4,4,4,4
-99999,NAO_ENCONTRADO,2,4,4,2,2
-99999,NAO_ENCONTRADO,4,4,0,2,2
+99999,NAO_ENCONTRADO,3,5,5,3,3
+99999,NAO_ENCONTRADO,5,5,1,3,3
 194198,Joris Delle,4,4,4,4,2
 197166,Juan Agudelo,4,4,2,4,2
 198046,Damian Dabrowski,6,6,4,2,2

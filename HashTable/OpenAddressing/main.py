@@ -297,5 +297,5 @@ for i in range(len(lista_tabelas)):
 
 capacidades = [3793, 6637, 9473, 12323, 15149]
 
-salvar_estatisticas_construcao("estatisticas_construcao.csv", lista_estatisticas_construcao, capacidades)
-salvar_estatisticas_consultas("estatisticas_consultas.csv", lista_estatisticas_consulta, lista_tempos_consulta, capacidades)
+salvar_estatisticas_construcao("estatisticas_construcao.txt", lista_estatisticas_construcao, capacidades)
+salvar_estatisticas_consultas("estatisticas_consultas.txt", lista_estatisticas_consulta, lista_tempos_consulta, capacidades)
