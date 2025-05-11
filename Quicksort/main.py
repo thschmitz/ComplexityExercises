@@ -41,6 +41,7 @@ def partition(lista, left, right, pivot_type, partition_scheme):
             if i >= j:
                 return j
             lista[i], lista[j] = lista[j], lista[i]
+            print(lista)
 
     else:
         raise ValueError("Esquema de partição inválido")
@@ -87,6 +88,7 @@ for tam in tamanhos:
     print(f"\n--- Tamanho: {tam} elementos ---")
     lista = generate_random_array(tam)
     salvar_em_txt(lista, str(tam))
+    lista = [6, 1, 2, 4, 5, 3, 9, 8, 10, 11, 7]
 
     run_quicksort("Lomuto + First Value", lista, FIRST_VALUE, LOMUTO)
     run_quicksort("Lomuto + Random Value", lista, RANDOM_VALUE, LOMUTO)

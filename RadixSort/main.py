@@ -183,6 +183,6 @@ for tam in tamanhos:
     lista = generate_random_array(tam)
     salvar_em_txt(lista, str(tam))
 
-    #run_countingsort("CountingSort", lista)
+    run_countingsort("CountingSort", lista)
     finalListLSD = run_radixsort("RadixSort - LSD", LSD, lista)
     finalListMSD = run_radixsort("RadixSort - MSD", MSD, lista)
