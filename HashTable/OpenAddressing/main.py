@@ -1,6 +1,8 @@
 import csv
 import time
 
+SORTED = "SORTED"
+
 class Node:
     def __init__(self, id, nome, posicao):
         self.id = id
@@ -105,7 +107,7 @@ class HashTable:
                 numero_testes += 1
                 right = mid - 1
 
-        return None, numero_testes
+        return None, numero_testes+1
 
 
 
@@ -119,6 +121,8 @@ class HashTable:
                 return current, numero_testes
 
             current = current.next
+        return None, numero_testes
+
 
     def remove(self, id):
         index = self._hash(id)
@@ -253,37 +257,21 @@ def salvar_estatisticas_construcao(nome_arquivo, lista_estatisticas_construcao, 
         f.write(','.join([f'{est.media_tamanho:.6f}' for est in lista_estatisticas_construcao]) + '\n')
 
 def salvar_estatisticas_consultas(nome_arquivo, lista_estatisticas_consulta, lista_tempos_consulta, capacidades):
-    # Mapeamento: id -> {nome, {capacidade: numero_testes}}
-    mapa_resultados = {}
-
-    # Preenche o mapa com os dados vindos das estatísticas individuais
-    for i, est_lista in enumerate(lista_estatisticas_consulta):
-        cap = capacidades[i]
-        for est in est_lista:
-            if est.id not in mapa_resultados:
-                mapa_resultados[est.id] = {"nome": est.nome, "testes": {}}
-            mapa_resultados[est.id]["testes"][cap] = est.numero_testes
-
-    # Agora garante que todas as capacidades estejam presentes
-    for id_jogador in mapa_resultados:
-        for cap in capacidades:
-            if cap not in mapa_resultados[id_jogador]["testes"]:
-                mapa_resultados[id_jogador]["testes"][cap] = 0  # Força o preenchimento com 0
-
     with open(nome_arquivo, 'w', encoding='utf-8') as f:
-        # Primeira linha: tempos em milissegundos
         f.write(','.join([f'{int(t * 1000)}' for t in lista_tempos_consulta]) + '\n')
 
-        # Linhas de saída: id,nome,testes_por_capacidade
-        for id_jogador in sorted(mapa_resultados.keys()):
-            nome = mapa_resultados[id_jogador]["nome"]
-            testes = mapa_resultados[id_jogador]["testes"]
-            linha = f'{id_jogador},{nome}'
-            for cap in capacidades:
-                linha += f',{testes[cap]}'
+        num_ids = len(lista_estatisticas_consulta[0]) 
+
+        for i in range(num_ids):
+            id_jogador = lista_estatisticas_consulta[0][i].id
+            nome_jogador = lista_estatisticas_consulta[0][i].nome
+            linha = f"{id_jogador},{nome_jogador}"
+
+            for tabela_idx in range(len(capacidades)):
+                est = lista_estatisticas_consulta[tabela_idx][i]
+                linha += f",{est.numero_testes}"
+
             f.write(linha + '\n')
-
-
 
 tabela3793 = HashTable(3793)
 tabela6637 = HashTable(6637)
@@ -293,7 +281,6 @@ tabela15149 = HashTable(15149)
 
 caminho_players = "players.csv"
 caminho_consultas = "consultas.csv"
-SORTED = "SORTED"
 
 lista_tabelas = [tabela3793, tabela6637, tabela9473, tabela12323, tabela15149]
 lista_estatisticas_construcao = []
@@ -310,5 +297,5 @@ for i in range(len(lista_tabelas)):
 
 capacidades = [3793, 6637, 9473, 12323, 15149]
 
-salvar_estatisticas_construcao("estatisticas_construcao.txt", lista_estatisticas_construcao, capacidades)
-salvar_estatisticas_consultas("estatisticas_consultas.txt", lista_estatisticas_consulta, lista_tempos_consulta, capacidades)
+salvar_estatisticas_construcao("estatisticas_construcao.csv", lista_estatisticas_construcao, capacidades)
+salvar_estatisticas_consultas("estatisticas_consultas.csv", lista_estatisticas_consulta, lista_tempos_consulta, capacidades)
